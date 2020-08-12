@@ -1,0 +1,1 @@
+bootgen -arch zynq -image boot.bif -o BOOT.BIN
