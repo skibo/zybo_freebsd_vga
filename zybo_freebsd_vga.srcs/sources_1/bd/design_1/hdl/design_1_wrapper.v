@@ -1,7 +1,7 @@
 //Copyright 1986-2020 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2020.1 (lin64) Build 2902540 Wed May 27 19:54:35 MDT 2020
-//Date        : Wed Aug 12 16:04:42 2020
+//Date        : Wed Aug 12 17:17:13 2020
 //Host        : chapin running 64-bit Ubuntu 18.04.4 LTS
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -35,6 +35,8 @@ module design_1_wrapper
     FIXED_IO_ps_srstb,
     GREEN_O,
     HSYNC_O,
+    IIC_scl_io,
+    IIC_sda_io,
     LD,
     RED_O,
     SW,
@@ -65,6 +67,8 @@ module design_1_wrapper
   inout FIXED_IO_ps_srstb;
   output [5:0]GREEN_O;
   output HSYNC_O;
+  inout IIC_scl_io;
+  inout IIC_sda_io;
   output [3:0]LD;
   output [4:0]RED_O;
   input [3:0]SW;
@@ -96,12 +100,30 @@ module design_1_wrapper
   wire FIXED_IO_ps_srstb;
   wire [5:0]GREEN_O;
   wire HSYNC_O;
+  wire IIC_scl_i;
+  wire IIC_scl_io;
+  wire IIC_scl_o;
+  wire IIC_scl_t;
+  wire IIC_sda_i;
+  wire IIC_sda_io;
+  wire IIC_sda_o;
+  wire IIC_sda_t;
   wire [3:0]LD;
   wire [4:0]RED_O;
   wire [3:0]SW;
   wire VSYNC_O;
   wire sys_clock;
 
+  IOBUF IIC_scl_iobuf
+       (.I(IIC_scl_o),
+        .IO(IIC_scl_io),
+        .O(IIC_scl_i),
+        .T(IIC_scl_t));
+  IOBUF IIC_sda_iobuf
+       (.I(IIC_sda_o),
+        .IO(IIC_sda_io),
+        .O(IIC_sda_i),
+        .T(IIC_sda_t));
   design_1 design_1_i
        (.BLUE_O(BLUE_O),
         .BTN(BTN),
@@ -128,6 +150,12 @@ module design_1_wrapper
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
         .GREEN_O(GREEN_O),
         .HSYNC_O(HSYNC_O),
+        .IIC_scl_i(IIC_scl_i),
+        .IIC_scl_o(IIC_scl_o),
+        .IIC_scl_t(IIC_scl_t),
+        .IIC_sda_i(IIC_sda_i),
+        .IIC_sda_o(IIC_sda_o),
+        .IIC_sda_t(IIC_sda_t),
         .LD(LD),
         .RED_O(RED_O),
         .SW(SW),

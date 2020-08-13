@@ -52,3 +52,5 @@ set_property IOSTANDARD LVCMOS33 [get_ports HSYNC_O]
 set_property SLEW FAST [get_ports VSYNC_O]
 set_property SLEW FAST [get_ports HSYNC_O]
 
+set_property -dict {PACKAGE_PIN N18 IOSTANDARD LVCMOS33} [get_ports IIC_scl_io]
+set_property -dict {PACKAGE_PIN N17 IOSTANDARD LVCMOS33} [get_ports IIC_sda_io]
