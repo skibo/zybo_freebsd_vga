@@ -31,11 +31,11 @@ module zybo_vid_gizmo(output [4 : 0] red,
                       output [5 : 0] green,
                       output [4 : 0] blue,
 
-                      input [23 : 0] vid_data,
+                      input [31 : 0] vid_data,
                       input          active_video);
 
-    assign red = {5{active_video}} & vid_data[23 : 19];
+    assign red = {5{active_video}} & vid_data[7 : 3];
     assign green = {6{active_video}} & vid_data[15 : 10];
-    assign blue = {5{active_video}} & vid_data[7 : 3];
+    assign blue = {5{active_video}} & vid_data[23 : 19];
 
 endmodule // zybo_vid_gizmo
