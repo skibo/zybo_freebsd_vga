@@ -6,6 +6,7 @@ SRCDIR=$(PROJNM).srcs
 SOURCES= \
 	$(SRCDIR)/constrs_1/zybopins.xdc		\
 	$(SRCDIR)/sources_1/bd/design_1/design_1.bd	\
+	$(SRCDIR)/sources_1/bd/design_1/hdl/design_1_wrapper.v \
 	$(SRCDIR)/sources_1/zybo_vid_gizmo.v
 
 ifndef XILINX_VIVADO
@@ -14,9 +15,9 @@ endif
 
 VIVADO=$(XILINX_VIVADO)/bin/vivado
 
-.PHONY: default project binfile
+.PHONY: default project bitstream
 
-default: project binfile
+default: project bitstream
 
 PROJECT_FILE=$(PROJNM)/$(PROJNM).xpr
 
@@ -25,12 +26,12 @@ project: $(PROJECT_FILE)
 $(PROJECT_FILE): 
 	$(VIVADO) -mode batch -source project.tcl
 
-BINFILE=$(PROJNM)/$(PROJNM).runs/impl_1/fpga.bin
+BITFILE=$(PROJNM)/$(PROJNM).runs/impl_1/design_1_wrapper.bit
 
-binfile: $(BINFILE)
+bitstream: $(BITFILE)
 
-$(BINFILE): $(SOURCES) $(PROJECT_FILE)
-	echo Building $(BINFILE) from sources
+$(BITFILE): $(SOURCES) $(PROJECT_FILE)
+	echo Building $(BITFILE) from sources
 	$(VIVADO) -mode batch -source $(SRCDIR)/scripts_1/bitstream.tcl \
 		-tclargs $(PROJNM)
 
