@@ -1,1 +1,5 @@
 Workspace/
+BootImage/BOOT.BIN
+BootImage/design_1_wrapper.bit
+BootImage/fsbl.elf
+BootImage/u-boot.elf
