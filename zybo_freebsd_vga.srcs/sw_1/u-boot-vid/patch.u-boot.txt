@@ -1,0 +1,65 @@
+diff --git a/arch/arm/dts/zynq-zybo.dts b/arch/arm/dts/zynq-zybo.dts
+index 0ac54ebbdc..0e7e89fd90 100644
+--- a/arch/arm/dts/zynq-zybo.dts
++++ b/arch/arm/dts/zynq-zybo.dts
+@@ -34,6 +34,16 @@
+ 	};
+ };
+ 
++&amba {
++	xlnx-fb@43000000 {
++		compatible = "xlnx,xlnx-fb";
++		status = "okay";
++		reg = <0x43c00000 0x1000>,
++			<0x43000000 0x1000>;
++		u-boot,dm-pre-reloc;
++	};
++};
++
+ &clkc {
+ 	ps-clk-frequency = <50000000>;
+ };
+@@ -69,3 +79,11 @@
+ 	dr_mode = "host";
+ 	usb-phy = <&usb_phy0>;
+ };
++
++&i2c0 {
++	status = "okay";
++	eeprom: eeprom@50 {
++		compatible = "atmel,24c08";
++		reg = <0x50>;
++	};
++};
+diff --git a/drivers/video/Kconfig b/drivers/video/Kconfig
+index e2e1f9c476..c737455abd 100644
+--- a/drivers/video/Kconfig
++++ b/drivers/video/Kconfig
+@@ -256,6 +256,15 @@ config VIDEO_VESA
+ 	  by U-Boot. This can in principle be used with any platform that
+ 	  supports PCI and video cards that support VESA BIOS Extension (VBE).
+ 
++config VIDEO_XLNX
++	bool "Enable Xilinx video driver support"
++	depends on DM_VIDEO
++	default n
++	help
++	  Turn on this option to enable a framebuffer driver for Xilinx IP
++	  commonly used to create framebuffers in Zynq devices like the
++	  Zedboard or Zybo.
++
+ config FRAMEBUFFER_SET_VESA_MODE
+ 	bool "Set framebuffer graphics resolution"
+ 	depends on VIDEO_VESA || VIDEO_BROADWELL_IGD
+diff --git a/drivers/video/Makefile b/drivers/video/Makefile
+index 67a492a2d6..0f4c90b6bc 100644
+--- a/drivers/video/Makefile
++++ b/drivers/video/Makefile
+@@ -70,6 +70,7 @@ obj-$(CONFIG_VIDEO_SIMPLE) += simplefb.o
+ obj-$(CONFIG_VIDEO_TEGRA20) += tegra.o
+ obj-$(CONFIG_VIDEO_VCXK) += bus_vcxk.o
+ obj-$(CONFIG_VIDEO_VESA) += vesa.o
++obj-$(CONFIG_VIDEO_XLNX) += xlnx_fb.o
+ 
+ obj-y += bridge/
+ obj-y += sunxi/
