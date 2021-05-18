@@ -290,7 +290,7 @@ static const struct udevice_id xlnx_fb_ids[] = {
 	{ }
 };
 
-U_BOOT_DRIVER(atmel_fb) = {
+U_BOOT_DRIVER(xlnx_fb) = {
 	.name	= "xlnx_fb",
 	.id	= UCLASS_VIDEO,
 	.of_match = xlnx_fb_ids,
