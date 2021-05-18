@@ -212,7 +212,7 @@ DECLARE_GLOBAL_DATA_PTR;
 
 static int xlnx_fb_probe(struct udevice *dev)
 {
-	struct video_uc_platdata *uc_plat = dev_get_uclass_platdata(dev);
+	struct video_uc_plat *uc_plat = dev_get_uclass_plat(dev);
 	struct video_priv *uc_priv = dev_get_uclass_priv(dev);
 	uint32_t active;
 	int width;
@@ -267,7 +267,7 @@ static int xlnx_fb_probe(struct udevice *dev)
 
 static int xlnx_fb_bind(struct udevice *dev)
 {
-	struct video_uc_platdata *uc_plat = dev_get_uclass_platdata(dev);
+	struct video_uc_plat *uc_plat = dev_get_uclass_plat(dev);
 	uint32_t active;
 	int width;
 	int height;
